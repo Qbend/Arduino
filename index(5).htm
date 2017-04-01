@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=UTF-8'>	
+	<meta name="viewport" content="width=device-width", initial-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="style.css"/>	
+	<title>Thermostat - Головна</title>
+<script>
+	function GetTempValue()
+	{
+		nocache = "&nocache=" + Math.random() * 1000000;
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function()
+		{
+			if (this.readyState == 4) 
+			{
+				if (this.status == 200) 
+				{
+					if (this.responseText != null) 
+					{						
+						var arrayOfStrings = this.responseText.split(":");						
+						document.getElementById("Temp1").innerHTML = arrayOfStrings[0];		
+						document.getElementById("Temp2").innerHTML = arrayOfStrings[1];
+						document.getElementById("Temp3").innerHTML = arrayOfStrings[2];
+						document.getElementById("Time").innerHTML = arrayOfStrings[3];
+						var relayStatus = arrayOfStrings[4];						
+						if (relayStatus == 0) 
+						{
+							document.getElementById("Relay_Status").innerHTML = "OFF";
+						}
+						if (relayStatus == 1) 
+						{
+							document.getElementById("Relay_Status").innerHTML = "ON";
+						}
+						
+						document.getElementById("Debug").innerHTML = arrayOfStrings[5];
+						var automan = arrayOfStrings[6]
+						if (automan == 0)						
+						{
+							document.getElementById("button_status").setAttribute("class", "button_status2");
+							document.getElementById("button_status").innerHTML = "Вкл авт. режим";
+							document.getElementById("relay_automan").innerHTML = "Ручний";
+						}
+						if (automan == 1)						
+						{
+							document.getElementById("button_status").setAttribute("class", "button_status2");
+							document.getElementById("button_status").innerHTML = "Вкл ручн. режим";
+							document.getElementById("relay_automan").innerHTML = "Автоматичний";
+						}
+					}
+				}
+			}
+		}
+		request.open("GET", "ajax_temp" + nocache, true);
+		request.send(null);
+		setTimeout('GetTempValue()', 3000);
+	}
+	function onClickON(pin)
+	{
+		var request = new XMLHttpRequest();		
+		request.open("GET", "relay?status=1", false);
+		request.send(null);
+	}
+	function onClickOFF(pin)
+	{
+		var request = new XMLHttpRequest();		
+		request.open("GET", "relay?status=0", false);
+		request.send(null);
+	}
+	function onClickAutoMan()
+	{
+		var request = new XMLHttpRequest();		
+		request.open("GET", "relay?automan", false);
+		request.send(null);
+	}
+	function openOptionsPage()
+	{
+		window.open ('options.htm','_self',false)
+	}
+</script>
+</head>
+
+<body onload="GetTempValue()">
+	<table width="270px" border="2" cellspacing="0" cellpadding="0" align="center" >
+		<tr><td><p align="center"><b>Start Time = </b><span id="Time">Завант.</span></p></td></tr>
+		
+		<tr><td>
+		<p align="center"><b><span id="Temp1_text">Temp1 = </span></b><span id="Temp1">Завант.</span></p>
+		<p align="center"><b><span id="Temp2_text">Temp2 = </span></b><span id="Temp2">Завант.</span></p>
+		<p align="center"><b><span id="Temp3_text">Temp3 = </span></b><span id="Temp3">Завант.</span></p>		
+		</td></tr>
+		
+		<tr><td>
+			<p align="center"><img src="test.jpg" alt="alt text"></p><!--width="200" class="fast"-->
+		</td></tr>
+		
+		<tr><td><p align="center">
+			<button class="button_status1" type="button" id="button_status" onClick="onClickAutoMan()">Завант.</button></br>
+			<span>Режим: </span><span id="relay_automan">Завант.</span>		
+		</p></td></tr>
+		<tr><td><p align="center">
+			<b>Управління споживачем (Реле)</b></br>
+			<button class="button_ON" type="button" id="relayON" onClick="onClickON(1)">Вкл</button>
+			<button class="button_OFF" type="button" id="relayOFF" onClick="onClickOFF(1)">Викл</button>
+		</p>
+		<p align="center"><b>Реле = </b><span id="Relay_Status">Завант.</span></p>
+		</td></tr>
+		<tr><td><p align="center">
+			<button class="button_status1" type="button" id="button_options" onClick="openOptionsPage()">Налаштування</button></br>			
+		</p></td></tr>
+	</table>
+	<p align="center"><b>Debug </b><span id="Debug">Завант.</span></p>
+</body>
+</html>

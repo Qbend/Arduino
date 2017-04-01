@@ -1,0 +1,65 @@
+.button_status1 
+ {
+	color: #000; /* колір тексту */
+	background: rgb(204, 204, 0); /* фон кнопки */
+	/* border: none;  не показувати рамку */
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px; /* заокруглення кутів кнопки */
+	border:2px solid #29668f; /*товщина + стиль + колір памки*/	
+	width:150px;
+	height:30px; 
+	font-weight: bold;	
+}
+.button_status2
+ {
+	color: #000; /* колір тексту */
+	background: rgb(17,237,105); /* фон кнопки */
+	/* border: none;  не показувати рамку */
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px; /* заокруглення кутів кнопки */
+	border:2px solid #29668f; /*товщина + стиль + колір памки*/	
+	width:150px;
+	height:30px; 
+	font-weight: bold;	
+}
+.button_ON 
+ {
+	color: #000; /* колір тексту */
+	background: rgb(17,237,105); /* фон кнопки */
+	/* border: none;  не показувати рамку */
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px; /* заокруглення кутів кнопки */
+	border:2px solid #29668f; /*товщина + стиль + колір памки*/	
+	width:100px;
+	height:30px;  
+}
+ .button_OFF 
+ {
+	color: #fff; /* колір тексту */
+	background: rgb(212, 75, 56);/* фон кнопки */
+	/* border: none;  не показувати рамку */
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px; /* заокруглення кутів кнопки */
+	border:2px solid #29668f; /*товщина + стиль + колір памки*/		
+	width:100px;
+	height:30px;
+ }
+p 
+{
+	margin: 7px 5px 7px 5px;
+	padding:0px;	
+}
+table
+{
+	border: 4px double;
+}
+img
+{	
+	vertical-align:middle;
+	width: 100%;
+	display: block;
+}

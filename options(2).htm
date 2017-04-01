@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=UTF-8'>	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link type="text/css" rel="StyleSheet" href="style.css"/>
+	<title>Thermostat - налаштування</title>
+<script>
+	function GetOptionsValue()
+	{
+		nocache = "&nocache=" + Math.random() * 1000000;
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function()
+		{
+			if (this.readyState == 4) 
+			{
+				if (this.status == 200) 
+				{
+					if (this.responseText != null) 
+					{						
+						var arrayOfStrings = this.responseText.split(":");						
+						document.getElementById("temp").value = arrayOfStrings[0];		
+						document.getElementById("hysteresis").value = arrayOfStrings[1];
+						document.getElementById("pwd").value = arrayOfStrings[2];
+						document.getElementById("debug").innerHTML = arrayOfStrings[3];
+						document.getElementById("integration").value = arrayOfStrings[4];
+						document.getElementById("log_history").value = arrayOfStrings[5];
+						//document.getElementById("temp").value = "Вкл авт. режим";
+						//document.getElementById("temp1_text").innerHTML = arrayOfStrings[2];
+						//document.getElementById("temp2_text").innerHTML = arrayOfStrings[3];
+						//document.getElementById("temp3_text").innerHTML = arrayOfStrings[4];						
+					}
+				}
+			}
+		}
+		request.open("GET", "ajax_options" + nocache, true);
+		request.send(null);
+		//GetOptionsValue();
+		//setTimeout('GetOptionsValue()', 3000); 
+	}
+	function onSave()
+	{
+		var request = new XMLHttpRequest();		
+		var options = "\options?temp=" + document.getElementById("temp").value;
+		options += "&hyst=" + document.getElementById("hysteresis").value;
+		options += "&pwd=" + document.getElementById("debug").innerHTML;
+		options += "&int=" + document.getElementById("integration").value;
+		options += "&loglen=" + document.getElementById("integration").value;		
+		request.open("GET", options, false);
+		request.send(null);
+		//options = "&temp1_text=" + document.getElementById("temp1_text").innerHTML;
+		//options = "&temp2_text=" + document.getElementById("temp2_text").innerHTML;
+		//options = "&temp3_text=" + document.getElementById("temp3_text").innerHTML;
+	}
+	function openMainPage()
+	{
+		window.open ('index.htm','_self',false)
+	}
+</script>
+</head>
+
+<body onload="GetOptionsValue()"><!-- -->
+	<table width="270px" border="2" cellspacing="0" cellpadding="0" align="center" >
+		<tr><td><p align="center"><b>Налаштування</b></p></td></tr>
+		<tr><td>
+		<p align="center"><b>Температура </b><input type="text" size="8" value="Завант." id="temp"></p>
+		<p align="center"><b>Гістерезис </b><input type="text" size="8" value="Завант." id="hysteresis"></p>
+		</td></tr>
+		<!--<tr><td>
+		<p align="center"><b>Текст для датчика 1 </b><input type="text" size="8" value="Завант." id="temp1_text"></p>
+		<p align="center"><b>Текст для датчика 2 </b><input type="text" size="8" value="Завант." id="temp2_text"></p>
+		<p align="center"><b>Текст для датчика 3 </b><input type="text" size="8" value="Завант." id="temp3_text"></p>
+		</td></tr>-->
+		<tr><td>
+		<p align="center"><b>Пароль </b><input type="PASSWORD" size="8" value="pwd..." id="pwd"></p>		
+		</td></tr>
+		<tr><td>
+		<p align="center"><b>Статистика</b></p>
+		<p align="center"><b>Період інтеграції </b><input type="text" size="8" value="Завант." id="integration"></p>				
+		<p align="center"><b>Глибина архівних даних </b><input type="text" size="6" value="Завант." id="log_history"></p>				
+		</td></tr>
+		<tr><td><p align="center"><b>Debug </b><span id="debug">Завант.</span></p></td></tr>
+		<tr><td><p align="center">		
+			<button type="button" id="relay" onClick="onSave()">Зберегти</button>			
+		</p></td></tr>	
+		<tr><td><p align="center">
+			<button class="button_status1" type="button" id="button_main" onClick="openMainPage()">Головна</button></br>			
+		</p></td></tr>
+	</table>
+</body>
+</html>
